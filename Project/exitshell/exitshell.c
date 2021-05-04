@@ -2,5 +2,5 @@
 
 int exitshell(char **args)
 {
-  return 1;
+  return 0;
 }

@@ -1,16 +1,9 @@
-
-//Main loop that takes inputs and parses them
-
-/*******************************************************************************************************************/
-
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
-
-/*******************************************************************************************************************/
 
 #include "switchfolder/switchfolder.h"
 #include "createfolder/createfolder.h"
@@ -22,11 +15,16 @@
 #include "usefolder/usefolder.h"
 #include "exitshell/exitshell.h"
 
-/*******************************************************************************************************************/
+#define TOK_DELIM " \t\r\n" 
+#define RED "\033[0;31m"
+#define RESET "\e[0m"
+#define TK_BUFF_SIZE 1024
 
-/**
-  @brief List of command names.
- */
+char *read_line();
+char **split_line(char *);
+int exit(char **);
+int execute(char **);
+
 char *commands_str[] = {
     "switch",
     "create",
@@ -38,9 +36,6 @@ char *commands_str[] = {
     "use",
     "exit"};
 
-/**
-  @brief List of command function pointers corresposding to the previous names.
- */
 int (*commands_func[])(char **) = {
     &switchfolder,
     &createfolder,
@@ -52,171 +47,143 @@ int (*commands_func[])(char **) = {
     &usefolder,
     &exitshell};
 
-/*******************************************************************************************************************/
-
-/**
-  @brief Launch a program and wait for it to terminate.
-  @param arguments Null terminated list of command + arguments.
-  @return Always returns 1, to continue execution.
- */
-int launch(char **arguments)
+int execute(char **args)
 {
-  pid_t pid, wpid;
-  int status;
+    pid_t cpid;
+    int status;
 
-  pid = fork();
-  if (pid == 0)
-  {
-    // Child process
-    if (execvp(arguments[0], arguments) == -1)
+    /* if (strcmp(args[0], "exit") == 0)
     {
-      perror("Error");
+        return exit(args);
+    } */
+
+    for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
+    {
+        if (strcmp(args[0], commands_str[i]) == 0)
+        {
+            return (*commands_func[i])(args);
+        }
     }
-    exit(EXIT_FAILURE);
-  }
-  else if (pid < 0)
-  {
-    // Error forking
-    perror("Error");
-  }
-  else
-  {
-    // Parent process
-    do
+
+    cpid = fork();
+
+    if (cpid == 0)
     {
-      wpid = waitpid(pid, &status, WUNTRACED);
-    } while (!WIFEXITED(status) && !WIFSIGNALED(status));
-  }
-
-  return 1;
-}
-
-/**
-   @brief Execute shell built-in or launch command.
-   @param arguments Null terminated list of arguments.
-   @return 1 if the shell should continue running, 0 if it should terminate
- */
-int execute(char **arguments)
-{
-
-  if (arguments[0] == NULL)
-  {
-    // An empty command was entered.
-    return 1;
-  }
-
-  for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
-  {
-    if (strcmp(arguments[0], commands_str[i]) == 0)
-    {
-      return (*commands_func[i])(arguments);
+        if (execvp(args[0], args) < 0)
+            printf("dash: command not found: %s\n", args[0]);
+        exit(EXIT_FAILURE);
     }
-  }
-
-  return launch(arguments);
-}
-
-/*******************************************************************************************************************/
-
-/**
-   @brief Read a line of input from stdin.
-   @return The line from stdin.
- */
-char *read_line(void)
-{
-  char *line = NULL;
-  ssize_t bufsize = 0; // have getline allocate a buffer for us
-
-  if (getline(&line, &bufsize, stdin) == -1)
-  {
-    if (feof(stdin))
-    {
-      exit(EXIT_SUCCESS); // We recieved an EOF
-    }
+    else if (cpid < 0)
+        printf(RED "Error forking" RESET "\n");
     else
     {
-      exit(EXIT_FAILURE);
+        waitpid(cpid, &status, WUNTRACED);
     }
-  }
-
-  return line;
+    return 1;
 }
 
-/*******************************************************************************************************************/
-
-/**
-   @brief Split a line into tokens.
-   @param line The input on the shell.
-   @return Null-terminated array of tokens.
- */
-char **tokeniser(char *line)
+int exit(char **args)
 {
-  int bufsize = 64;
-  char **tokens = malloc(bufsize * sizeof(char *));
-
-  if (!tokens)
-  {
-    fprintf(stderr, "allocation error\n");
-    exit(EXIT_FAILURE);
-  }
-
-  int position = 0;
-  char *token;
-  token = strtok(line, "\t\n");
-  while (token != NULL)
-  {
-    tokens[position] = token;
-    position++;
-
-    if (position >= bufsize)
-    {
-      bufsize += 64;
-      tokens = realloc(tokens, bufsize * sizeof(char *));
-      if (!tokens)
-      {
-        fprintf(stderr, "allocation error\n");
-        exit(EXIT_FAILURE);
-      }
-    }
-
-    token = strtok(NULL, "\t\n");
-  }
-  tokens[position] = NULL;
-  return tokens;
+    return 0;
 }
 
-/*******************************************************************************************************************/
+char **split_line(char *line)
+{
+    int buffsize = TK_BUFF_SIZE, position = 0;
+    char **tokens = (char**)malloc(buffsize * sizeof(char *));
+    char *token;
 
-/**
-   @brief Main Loop, I/O
- */
+    if (!tokens)
+    {
+        fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
+        exit(EXIT_FAILURE);
+    }
+    token = strtok(line, TOK_DELIM);
+    while (token != NULL)
+    {
+        tokens[position] = token;
+        position++;
+
+        if (position >= buffsize)
+        {
+            buffsize += TK_BUFF_SIZE;
+            tokens = (char**)realloc(tokens, buffsize * sizeof(char *));
+
+            if (!tokens)
+            {
+                fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
+                exit(EXIT_FAILURE);
+            }
+        }
+        token = strtok(NULL, TOK_DELIM);
+    }
+    tokens[position] = NULL;
+
+    return tokens;
+}
+
+char *read_line()
+{
+    int buffsize = 1024;
+    int position = 0;
+    char *buffer = (char*)malloc(sizeof(char) * buffsize);
+    int c;
+
+    if (!buffer)
+    {
+        fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
+        exit(EXIT_FAILURE);
+    }
+
+    while (1)
+    {
+        c = getchar();
+        if (c == EOF || c == '\n')
+        {
+            buffer[position] = '\0';
+            return buffer;
+        }
+        else
+        {
+            buffer[position] = c;
+        }
+        position++;
+
+        if (position >= buffsize)
+        {
+            buffsize += 1024;
+            buffer = (char*)realloc(buffer, buffsize);
+
+            if (!buffer)
+            {
+                fprintf(stderr, "dash: Allocation error\n");
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+}
+
+void loop()
+{
+    char *line;
+    char **args;
+    int status = 1;
+
+    do
+    {
+        char directory[10001];
+        getcwd(directory,10001);
+        printf("Group44Shell%s>",directory);
+        line = read_line();
+        args = split_line(line);
+        status = execute(args);
+        free(line);
+        free(args);
+    } while (status);
+}
+
 int main()
 {
-
-  char *line;
-  char **arguments;
-  int status;
-  int size = 1000;
-  char currentfolder[size];
-
-  do
-  {
-    getcwd(currentfolder, size);
-    printf("Group44");
-    if (currentfolder != NULL)
-      printf("/%s", currentfolder);
-    printf("> ");
-    line = read_line();
-    arguments = tokeniser(line);
-    status = execute(arguments);
-
-    free(line);
-    free(arguments);
-    //free(currentfolder);
-    size = 1000;
-  } while (status);
-
-  return EXIT_SUCCESS;
+    loop();
+    return 0;
 }
-
-/*******************************************************************************************************************/

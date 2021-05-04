@@ -22,7 +22,6 @@
 
 char *read_line();
 char **split_line(char *);
-int exit(char **);
 int execute(char **);
 
 char *commands_str[] = {
@@ -80,11 +79,6 @@ int execute(char **args)
         waitpid(cpid, &status, WUNTRACED);
     }
     return 1;
-}
-
-int exit(char **args)
-{
-    return 0;
 }
 
 char **split_line(char *line)

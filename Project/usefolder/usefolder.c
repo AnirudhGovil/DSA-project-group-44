@@ -1,5 +1,6 @@
 #include "usefolder.h"
 int usefolder(char **args)
 {
-    return 1;
+    chdir(args[1]);
+    return 2;
 }

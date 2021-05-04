@@ -162,6 +162,7 @@ void loop()
     char *line;
     char **args;
     int status = 1;
+    char use_string[1024];
 
     do
     {
@@ -170,7 +171,16 @@ void loop()
         printf("Group44Shell%s>",directory);
         line = read_line();
         args = split_line(line);
+        if(!args[1])
+        {
+            args[1]=(char*)malloc(sizeof(char)*10001);
+            strcpy(args[1],use_string);
+        }
         status = execute(args);
+        if (status==2)
+        {
+            strcpy(use_string,args[1]);
+        }
         free(line);
         free(args);
     } while (status);

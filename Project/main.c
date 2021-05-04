@@ -5,6 +5,8 @@
 #include <string.h>
 #include <limits.h>
 
+/////////////////////////////////////// INCLUDING THE CUSTOM COMMANDS
+
 #include "switchfolder/switchfolder.h"
 #include "createfolder/createfolder.h"
 #include "updatefolder/updatefolder.h"
@@ -13,16 +15,15 @@
 #include "submitfolder/submitfolder.h"
 #include "comparefolder/comparefolder.h"
 #include "usefolder/usefolder.h"
-#include "exitshell/exitshell.h"
 
-#define TOK_DELIM " \t\r\n" 
+/////////////////////////////////////// DEFINITIONS
+
+#define TOK_DELIM " \t\r\n"
 #define RED "\033[0;31m"
 #define RESET "\e[0m"
 #define TK_BUFF_SIZE 1024
 
-char *read_line();
-char **split_line(char *);
-int execute(char **);
+/////////////////////////////////////// CUSTOM COMMANDS LISTS FOR ACCESSING THEM
 
 char *commands_str[] = {
     "switch",
@@ -32,8 +33,7 @@ char *commands_str[] = {
     "test",
     "submit",
     "compare",
-    "use",
-    "exit"};
+    "use"};
 
 int (*commands_func[])(char **) = {
     &switchfolder,
@@ -43,31 +43,36 @@ int (*commands_func[])(char **) = {
     &testfolder,
     &submitfolder,
     &comparefolder,
-    &usefolder,
-    &exitshell};
+    &usefolder,};
+
+/////////////////////////////////////// DEFINING THE I/O FUNCTIONS
 
 int execute(char **args)
 {
     pid_t cpid;
     int status;
 
-    /* if (strcmp(args[0], "exit") == 0)
-    {
-        return exit(args);
-    } */
-
-    for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
+    /* for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
     {
         if (strcmp(args[0], commands_str[i]) == 0)
         {
             return (*commands_func[i])(args);
         }
-    }
+    } */
+    //If the **args i.e. input from the shell is a custom command, invoke it via (*commands_func[i])(args)
 
     cpid = fork();
 
     if (cpid == 0)
     {
+        for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
+        {
+            if (strcmp(args[0], commands_str[i]) == 0)
+            {
+                return (*commands_func[i])(args);
+            }
+        }
+
         if (execvp(args[0], args) < 0)
             printf("dash: command not found: %s\n", args[0]);
         exit(EXIT_FAILURE);
@@ -84,7 +89,7 @@ int execute(char **args)
 char **split_line(char *line)
 {
     int buffsize = TK_BUFF_SIZE, position = 0;
-    char **tokens = (char**)malloc(buffsize * sizeof(char *));
+    char **tokens = (char **)malloc(buffsize * sizeof(char *));
     char *token;
 
     if (!tokens)
@@ -101,7 +106,7 @@ char **split_line(char *line)
         if (position >= buffsize)
         {
             buffsize += TK_BUFF_SIZE;
-            tokens = (char**)realloc(tokens, buffsize * sizeof(char *));
+            tokens = (char **)realloc(tokens, buffsize * sizeof(char *));
 
             if (!tokens)
             {
@@ -120,7 +125,7 @@ char *read_line()
 {
     int buffsize = 1024;
     int position = 0;
-    char *buffer = (char*)malloc(sizeof(char) * buffsize);
+    char *buffer = (char *)malloc(sizeof(char) * buffsize);
     int c;
 
     if (!buffer)
@@ -146,7 +151,7 @@ char *read_line()
         if (position >= buffsize)
         {
             buffsize += 1024;
-            buffer = (char*)realloc(buffer, buffsize);
+            buffer = (char *)realloc(buffer, buffsize);
 
             if (!buffer)
             {
@@ -157,37 +162,45 @@ char *read_line()
     }
 }
 
+/////////////////////////////////////// MAIN LOOP
+
 void loop()
 {
     char *line;
     char **args;
     int status = 1;
     char use_string[1024];
+    memset(use_string,0,1024);
+    
 
     do
     {
         char directory[10001];
-        getcwd(directory,10001);
-        printf("Group44Shell%s>",directory);
+        getcwd(directory, 10001);
+        printf("Group44Shell%s>", directory);
         line = read_line();
         args = split_line(line);
-        if(!args[1])
+        if (!args[1])
         {
-            args[1]=(char*)malloc(sizeof(char)*10001);
-            strcpy(args[1],use_string);
+            args[1] = (char *)malloc(sizeof(char) * 10001);
+            strcpy(args[1], use_string);
         }
         status = execute(args);
-        if (status==2)
+        if (status == 2)
         {
-            strcpy(use_string,args[1]);
+            strcpy(use_string, args[1]);
         }
         free(line);
         free(args);
     } while (status);
 }
 
+/////////////////////////////////////// MAIN
+
 int main()
 {
     loop();
     return 0;
 }
+
+/////////////////////////////////////// END

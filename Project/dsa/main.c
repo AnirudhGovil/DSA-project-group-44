@@ -1,3 +1,4 @@
+// gcc -o shell *.c utils/comparefolder/*.* utils/createfolder/*.* utils/setupfolder/*.* utils/switchfolder/*.* utils/updatefolder/*.* utils/testfolder/*.* utils/submitfolder/*.* utils/usefolder/*.*
 #include <sys/wait.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -7,14 +8,14 @@
 
 /////////////////////////////////////// INCLUDING THE CUSTOM COMMANDS
 
-#include "switchfolder/switchfolder.h"
-#include "createfolder/createfolder.h"
-#include "updatefolder/updatefolder.h"
-#include "setupfolder/setupfolder.h"
-#include "testfolder/testfolder.h"
-#include "submitfolder/submitfolder.h"
-#include "comparefolder/comparefolder.h"
-#include "usefolder/usefolder.h"
+#include "utils/switchfolder/switchfolder.h"
+#include "utils/createfolder/createfolder.h"
+#include "utils/updatefolder/updatefolder.h"
+#include "utils/setupfolder/setupfolder.h"
+#include "utils/testfolder/testfolder.h"
+#include "utils/submitfolder/submitfolder.h"
+#include "utils/comparefolder/comparefolder.h"
+#include "utils/usefolder/usefolder.h"
 
 /////////////////////////////////////// DEFINITIONS
 
@@ -43,7 +44,7 @@ int (*commands_func[])(char **) = {
     &testfolder,
     &submitfolder,
     &comparefolder,
-    &usefolder,};
+    &usefolder};
 
 /////////////////////////////////////// DEFINING THE I/O FUNCTIONS
 
@@ -69,7 +70,7 @@ int execute(char **args)
         {
             if (strcmp(args[0], commands_str[i]) == 0)
             {
-                return (*commands_func[i])(args);
+                return ((*commands_func[i])(args));
             }
         }
 

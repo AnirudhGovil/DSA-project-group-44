@@ -90,8 +90,7 @@ void CreateFolder(tree folder, char* path)
 int setupfolder(char **args)
 {
     
-    return 1;
-    char filename[] = "/home/aarush/Downloads/setup.txt";
+    char filename[] = "/home/aarush/Downloads/setup1.txt";
     FILE* fileptr;
     fileptr = fopen(filename, "r") ;
     if(fileptr == NULL)
@@ -126,7 +125,7 @@ int setupfolder(char **args)
         }
         if(strcmp(buffer,args[1])!=0)
         {
-            fprintf(stderr, "Argument and Parent Dirctory do not match!");
+            fprintf(stderr, "Argument and Parent Dirctory do not match!\n");
             exit(EXIT_SUCCESS);
         }
         if(c == EOF)

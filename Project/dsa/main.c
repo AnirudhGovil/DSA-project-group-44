@@ -1,10 +1,12 @@
-// gcc -o shell *.c utils/comparefolder/*.* utils/createfolder/*.* utils/setupfolder/*.* utils/switchfolder/*.* utils/updatefolder/*.* utils/testfolder/*.* utils/submitfolder/*.* utils/usefolder/*.*
 #include <sys/wait.h>
+#include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #include <limits.h>
+#include <errno.h>
+#include <signal.h>
 
 /////////////////////////////////////// INCLUDING THE CUSTOM COMMANDS
 
@@ -16,6 +18,8 @@
 #include "utils/submitfolder/submitfolder.h"
 #include "utils/comparefolder/comparefolder.h"
 #include "utils/usefolder/usefolder.h"
+#include "utils/parse/parse.h"
+#include "utils/execute/execute.h"
 
 /////////////////////////////////////// DEFINITIONS
 
@@ -46,162 +50,43 @@ int (*commands_func[])(char **) = {
     &comparefolder,
     &usefolder};
 
-/////////////////////////////////////// DEFINING THE I/O FUNCTIONS
-
-int execute(char **args)
-{
-    pid_t cpid;
-    int status;
-
-    /* for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
-    {
-        if (strcmp(args[0], commands_str[i]) == 0)
-        {
-            return (*commands_func[i])(args);
-        }
-    } */
-    //If the **args i.e. input from the shell is a custom command, invoke it via (*commands_func[i])(args)
-
-    cpid = fork();
-
-    if (cpid == 0)
-    {
-        for (int i = 0; i < sizeof(commands_str) / sizeof(char *); i++)
-        {
-            if (strcmp(args[0], commands_str[i]) == 0)
-            {
-                return ((*commands_func[i])(args));
-            }
-        }
-
-        if (execvp(args[0], args) < 0)
-            printf("dash: command not found: %s\n", args[0]);
-        exit(EXIT_FAILURE);
-    }
-    else if (cpid < 0)
-        printf(RED "Error forking" RESET "\n");
-    else
-    {
-        waitpid(cpid, &status, WUNTRACED);
-    }
-    return 1;
-}
-
-char **split_line(char *line)
-{
-    int buffsize = TK_BUFF_SIZE, position = 0;
-    char **tokens = (char **)malloc(buffsize * sizeof(char *));
-    char *token;
-
-    if (!tokens)
-    {
-        fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
-        exit(EXIT_FAILURE);
-    }
-    token = strtok(line, TOK_DELIM);
-    while (token != NULL)
-    {
-        tokens[position] = token;
-        position++;
-
-        if (position >= buffsize)
-        {
-            buffsize += TK_BUFF_SIZE;
-            tokens = (char **)realloc(tokens, buffsize * sizeof(char *));
-
-            if (!tokens)
-            {
-                fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
-                exit(EXIT_FAILURE);
-            }
-        }
-        token = strtok(NULL, TOK_DELIM);
-    }
-    tokens[position] = NULL;
-
-    return tokens;
-}
-
-char *read_line()
-{
-    int buffsize = 1024;
-    int position = 0;
-    char *buffer = (char *)malloc(sizeof(char) * buffsize);
-    int c;
-
-    if (!buffer)
-    {
-        fprintf(stderr, "%sdash: Allocation error%s\n", RED, RESET);
-        exit(EXIT_FAILURE);
-    }
-
-    while (1)
-    {
-        c = getchar();
-        if (c == EOF || c == '\n')
-        {
-            buffer[position] = '\0';
-            return buffer;
-        }
-        else
-        {
-            buffer[position] = c;
-        }
-        position++;
-
-        if (position >= buffsize)
-        {
-            buffsize += 1024;
-            buffer = (char *)realloc(buffer, buffsize);
-
-            if (!buffer)
-            {
-                fprintf(stderr, "dash: Allocation error\n");
-                exit(EXIT_FAILURE);
-            }
-        }
-    }
-}
-
 /////////////////////////////////////// MAIN LOOP
-
-void loop()
-{
-    char *line;
-    char **args;
-    int status = 1;
-    char use_string[1024];
-    memset(use_string,0,1024);
-    
-
-    do
-    {
-        char directory[10001];
-        getcwd(directory, 10001);
-        printf("Group44Shell%s>", directory);
-        line = read_line();
-        args = split_line(line);
-        if (!args[1])
-        {
-            args[1] = (char *)malloc(sizeof(char) * 10001);
-            strcpy(args[1], use_string);
-        }
-        status = execute(args);
-        if (status == 2)
-        {
-            strcpy(use_string, args[1]);
-        }
-        free(line);
-        free(args);
-    } while (status);
-}
-
-/////////////////////////////////////// MAIN
 
 int main()
 {
-    loop();
+    char cmd[100001];    // stores the input
+    char *params[10001]; // stores the tokenised commands
+    char use_string[100001];
+    int status = 1; // check which function has been called and whether any auxillary work has to be done in main()
+
+    while (1)
+    {
+        // Print command prompt
+        char directory[10001];
+        getcwd(directory, 10001);
+        printf("Group44Shell%s>", directory);
+
+        // Read command from standard input
+        if (fgets(cmd, sizeof(cmd), stdin) == NULL)
+            break;
+
+        // Split cmd into array of parameters
+        parse(cmd, params, use_string);
+
+        // Execute command
+        int status = execute(params,commands_str,commands_func);
+
+        switch (status)
+        {
+        case 1: // continue running shell
+            continue;
+        case 2: // use function has been called, store the directory address
+            getcwd(use_string,100001);
+            break;
+        default:
+            break;
+        }
+    }
+
     return 0;
 }
-
-/////////////////////////////////////// END

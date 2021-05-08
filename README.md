@@ -15,11 +15,9 @@
     * compare – compare zip with assignment folder
 
 * Anirudh
-    * main.c - scans input and calls on the necessary function
-    * parse - turns the raw input into tokens
-    * execute - forks a child process and runs the necessary function
-    * switch - changes directories like cd with the added fucntionality of directly accessing sibling directories by name
+    * main.c, parse & execute - parse turns the raw input into tokens, execute forks a child process and runs the necessary function
+    * switch - changes directories like cd, also directly accesses sibling directories by name
     * use - stores the location and name of a selected directory and uses it as a default argument
-    
+
 ---------------------------------------------------------------------
 

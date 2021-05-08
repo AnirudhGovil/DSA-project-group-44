@@ -57,7 +57,7 @@ int main()
 {
     char cmd[100001];    // stores the input
     char *params[10001]; // stores the tokenised commands
-    char use_string[100001];
+    char use_string[100001]; // for the use function, to store the absolute path address of the folder to be 'used'
     int status = 1; // check which function has been called and whether any auxillary work has to be done in main()
 
     while (1)

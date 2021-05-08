@@ -1,4 +1,5 @@
-#include <sys/wait.h>
+/////////////////////////////////////// MAIN FILE
+
 #include <ctype.h>
 #include <unistd.h>
 #include <stdlib.h>
@@ -90,3 +91,5 @@ int main()
 
     return 0;
 }
+
+/////////////////////////////////////// END

@@ -14,7 +14,7 @@ int execute(char **params, char*commands_str[], int (*commands_func[])(char **))
         return 1;
     }
 
-    // Fork the child process
+    // Check if the child process was created successfully
     else if (pid == 0)
     {
         //exit function

@@ -68,7 +68,7 @@ copies to local directory)
 
 7. compare \<assignment> \<zipfile> Compares the
 file tree to check if any of the files in the submitted
-zip are dierent from any of the files in the current
+zip are different from any of the files in the current
 directory. Prints list of those files. Uses MD5 hash
 (command MD5 sum) to compare.
 

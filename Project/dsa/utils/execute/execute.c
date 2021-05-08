@@ -33,13 +33,13 @@ int execute(char **params, char*commands_str[], int (*commands_func[])(char **))
         // Execute built-in command
         if (execvp(params[0], params) < 0)
         {
-            printf("dash: command not found: %s\n", params[0]);
+            printf("Command not found: %s\n", params[0]);
             return 1;
         }
 
         // Error occurred in executing commmand
         char *error = strerror(errno);
-        printf("shell: %s: %s\n", params[0], error);
+        printf("Shell: %s: %s\n", params[0], error);
         return 1;
     }
 

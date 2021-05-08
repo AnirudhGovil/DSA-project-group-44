@@ -58,6 +58,7 @@ int main()
     char cmd[100001];    // stores the input
     char *params[10001]; // stores the tokenised commands
     char use_string[100001]; // for the use function, to store the absolute path address of the folder to be 'used'
+    char use_string_name[100001]; // for the use function, to store the name to be passed in the prompt
     int status = 1; // check which function has been called and whether any auxillary work has to be done in main()
 
     while (1)
@@ -65,7 +66,7 @@ int main()
         // Print command prompt
         char directory[10001];
         getcwd(directory, 10001);
-        printf("Group44Shell%s>", directory);
+        printf("Group44Shell%s<%s>", directory,use_string_name);
 
         // Read command from standard input
         if (fgets(cmd, sizeof(cmd), stdin) == NULL)
@@ -83,6 +84,9 @@ int main()
             continue;
         case 2: // use function has been called, store the directory address
             getcwd(use_string,100001);
+            strcpy(use_string_name,params[1]);
+            chdir(directory);
+            
             break;
         default:
             break;

@@ -106,7 +106,7 @@ void CreateFolder(tree folder, char* path)      // traverse through the whole tr
 int setupfolder(char **args)
 {
     
-    char filename[] = "/home/aarush/Downloads/setup.txt";  //**Path for the indented file to be read**//
+    char filename[] = "Downloads/setup.txt";  //**Path for the indented file to be read**//
     FILE* fileptr;
     fileptr = fopen(filename, "r") ;
     if(fileptr == NULL)

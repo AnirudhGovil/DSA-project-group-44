@@ -6,17 +6,17 @@ hash.c:174:29: runtime error: member access within misaligned address 0xbebebebe
 <memory cannot be printed>
 ASAN:DEADLYSIGNAL
 =================================================================
-==2714==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x563cb82bf7b7 bp 0x7ffe7eb60510 sp 0x7ffe7eb604e0 T0)
-==2714==The signal is caused by a READ memory access.
-==2714==Hint: address points to the zero page.
-    #0 0x563cb82bf7b6 in free_array_sc_str(string_node*, int) (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x67b6)
-    #1 0x563cb82c0a78 in main (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x7a78)
-    #2 0x7ff07b1a2bf6 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21bf6)
-    #3 0x563cb82bdd99 in _start (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x4d99)
+==20550==ERROR: AddressSanitizer: SEGV on unknown address 0x000000000000 (pc 0x555bb031e7b7 bp 0x7ffd0677d430 sp 0x7ffd0677d400 T0)
+==20550==The signal is caused by a READ memory access.
+==20550==Hint: address points to the zero page.
+    #0 0x555bb031e7b6 in free_array_sc_str(string_node*, int) (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x67b6)
+    #1 0x555bb031fa78 in main (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x7a78)
+    #2 0x7f30ef108bf6 in __libc_start_main (/lib/x86_64-linux-gnu/libc.so.6+0x21bf6)
+    #3 0x555bb031cd99 in _start (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x4d99)
 
 AddressSanitizer can not provide additional info.
 SUMMARY: AddressSanitizer: SEGV (/home/aarush/GitHub/DSA-project-group-44/Project/dsa/assignment1/dist/scratch/q2.bin+0x67b6) in free_array_sc_str(string_node*, int)
-==2714==ABORTING
+==20550==ABORTING
 ./dist/scratch/checker: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.26' not found (required by ./dist/scratch/checker)
 ./dist/scratch/checker: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.26' not found (required by ./dist/scratch/checker)
 ./dist/scratch/checker: /usr/lib/x86_64-linux-gnu/libstdc++.so.6: version `GLIBCXX_3.4.26' not found (required by ./dist/scratch/checker)

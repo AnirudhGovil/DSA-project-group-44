@@ -1,5 +1,5 @@
 #include "submitfolder.h"
-#include <sys/wait.h>
+// #include <sys/wait.h>
 #include <sys/stat.h>
 #include <dirent.h>
 #include <errno.h>
@@ -12,12 +12,13 @@ int submitfolder(char **args)
 {
     char cmd1[10001];
     char cmd2[10001];
+    char cmd3[10001];
     char current_directory[1024];
     char download_directory[1024];
     getcwd(current_directory, 1023);
     char * file_name;
     strcpy(file_name,args[1]);
-    char z = '/';
+    char * z = "/";
     // dowload_directory = 'Directory where the file need to be submitted';
     strcat(current_directory, z);
     strcat(current_directory,file_name);
@@ -30,12 +31,14 @@ int submitfolder(char **args)
     }   
     else
     {
-        FILE* zipptr;
-        zipptr = CreateZip(fileptr);
-        sprintf(cmd1, "mkdir %s/%s", download_directory, args[1]);
+    
+        sprintf(cmd1,"zip -q %s.zip %s ",file_name ,file_name );
         system(cmd1);
-        sprintf(cmd2, "cp -a %s. %s/%s", current_directory,download_directory , &zipptr); 
+        strcat(file_name, ".zip");
+        sprintf(cmd2, "mkdir %s/%s", download_directory, file_name);
         system(cmd2);
+        sprintf(cmd3, "cp -a %s. %s/%s", current_directory,download_directory , file_name); 
+        system(cmd3);
         printf("%s is zipped and submmited in the download directory\n",args[1]);
         
     }

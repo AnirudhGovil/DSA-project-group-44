@@ -27,7 +27,6 @@ int submitfolder(char **args)
     {
         perror(current_directory);
         printf("No such File\n");
-        //go error
     }   
     else
     {

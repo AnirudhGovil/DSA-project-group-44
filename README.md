@@ -5,14 +5,13 @@
 The assignment shell is compiled using the following lines of code :
 
 ~~~bash 
-cd location_of_the_repo_on_your_machine\DSA-project-group-44\Project\dsa
-~~~
-
-
-~~~bash
-gcc main.c utils/switchfolder/switchfolder.c utils/createfolder/createfolder.c utils/updatefolder/updatefolder.c utils/setupfolder/setupfolder.c utils/testfolder/testfolder.c utils/submitfolder/submitfolder.c utils/comparefolder/comparefolder.c utils/usefolder/usefolder.c utils/parse/parse.c utils/execute/execute.c 
+$> cd location_of_the_repo_on_your_machine\DSA-project-group-44\Project\dsa
+$> cmake a
+$> ./Shell
  ~~~
 
+<br>
+<br>
 
 We scan the command in ```main.c``` and turn the string into a series of arguments or tokens using the ``` parse(char *cmd, char **params, char *use_string)``` function. 
 
@@ -58,9 +57,6 @@ Suppose we are in folderA
 
 ~~~bash
 $Group44Shell/folderC/folderA>switch folderB 
-~~~
-
-~~~bash
 $Group44Shell/folderC/folderB>
 ~~~
 
@@ -68,9 +64,6 @@ $Group44Shell/folderC/folderB>
 
 ~~~bash
 $Group44Shell/folderC/folderA>switch folderD 
-~~~
-
-~~~bash
 $Group44Shell/folderC/folderA/folderD>
 ~~~
 
@@ -78,9 +71,6 @@ $Group44Shell/folderC/folderA/folderD>
 
 ~~~bash
 $Group44Shell/folderC/folderA>switch .. 
-~~~
-
-~~~bash
 $Group44Shell/folderC>
 ~~~
 
@@ -109,9 +99,6 @@ Suppose we are in folderA
 
 ~~~bash
 $Group44Shell/folderC/folderA>use folderD
-~~~
-
-~~~bash
 $Group44Shell/folderC/folderA<FolderD>
 ~~~
 
@@ -119,9 +106,6 @@ $Group44Shell/folderC/folderA<FolderD>
 
 ~~~bash
 $Group44Shell/folderC/folderA<folderD>switch folderB
-~~~
-
-~~~bash
 $Group44Shell/folderC/folderB<FolderD>
 ~~~
 
@@ -129,9 +113,6 @@ $Group44Shell/folderC/folderB<FolderD>
 
 ~~~bash
 $Group44Shell/folderC/folderB<FolderD>switch
-~~~
-
-~~~bash
 $Group44Shell/folderC/folderA/folderD<FolderD>
 ~~~
 

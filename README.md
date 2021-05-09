@@ -16,7 +16,7 @@ gcc main.c utils/switchfolder/switchfolder.c utils/createfolder/createfolder.c u
 
 We scan the command in ```main.c``` and turn the string into a series of arguments or tokens using the ``` parse(char *cmd, char **params, char *use_string)``` function. 
 
-The ``` parse(char *cmd, char **params, char *use_string)``` function removes unnecessary whitespace, escape sequence characters and stores each word of the command string into a list of tokens. 
+The ``` parse(char *cmd, char **params, char *use_string)``` function removes both unecessary whitespace both leading the string and within the string, removes escape sequence characters and stores each word of the command string into a list of tokens. 
 
 Each token in a string which is processed by the ```int execute(char **params, char*commands_str[], int (*commands_func[])(char **))``` function. 
 
@@ -25,6 +25,16 @@ The execute function forks a child process, identifies what set of instructions,
 The prompt shows the absolute path address of the directory the user is currently in (using the ```getcwd()```) function as well as any folder the user might be “using” selected via the ```usefolder(char **args)``` function in <>. 
 
 The shell supports 8 custom made commands as well as almost all standard bash shell commands.
+
+### Error Handling in execute
+
+<br>
+
+If the Shell fails to fork a child process it returns ```fork: error_description```
+
+If the command doesn't exist in bash or isn't one of the 8 custom defined functions, the shell returns ```Command not found: name_of_invalid_command```
+
+If there is an error in executing the command the shell returns ```Shell: command_name error_description```
 
 <br>
 

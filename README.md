@@ -147,10 +147,16 @@ Now, if we type the following in the prompt:
 ~~~bash
 test folderA
 ~~~
+
  <br>
+ 
  The program will run the ```submitter.py``` file and create a file ```testLog.txt``` with the output.
+ 
  <br>
  Hence, the new directory structure will be
+ 
+ <br>
+ 
  ~~~bash
 folderA
     dist

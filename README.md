@@ -1,103 +1,126 @@
 # DSA Project Group 44 - Assignment Shell
 
-## Distribution of Work
-
-* Aarush   
-    * setup- reads a text file from downloads and and creates a folder with this structure
-    * test – run python code and store output in text file
-
-* Vamsi
-    * create- create a new folder and copy contents from download folder
-    * update – delete old ones and add copy new ones
-
-* Vaibhav
-    * submit – zip file and keep it in dsa folder.
-    * compare – compare zip with assignment folder
-
-* Anirudh
-    * main.c, parse & execute - parse turns the raw input into tokens, execute forks a child process and runs the necessary function
-    * switch - changes directories like cd, also directly accesses sibling directories by name
-    * use - stores the location and name of a selected directory and uses it as a default argument
-
----------------------------------------------------------------------
-
 ## The Project
 
-Making a command line app which helps you manage
-and maintain the file structure on your assignment files,
-as well as readily accept updates to the problem structure.
+The assignment shell is compiled using the following lines of code :
+
+~~~bash 
+cd location_of_the_repo_on_your_machine\DSA-project-group-44\Project\dsa
+~~~
 
 
-TA incharge: Tushar Joshi
+~~~bash
+gcc main.c utils/switchfolder/switchfolder.c utils/createfolder/createfolder.c utils/updatefolder/updatefolder.c utils/setupfolder/setupfolder.c utils/testfolder/testfolder.c utils/submitfolder/submitfolder.c utils/comparefolder/comparefolder.c utils/usefolder/usefolder.c utils/parse/parse.c utils/execute/execute.c 
+ ~~~
 
 
-### A. Legend
-After the assignment is released, TAs make changes
-to the problems, update the PDFs and the distribution
-packages, their file system checker code does not work
-and we have to send them screenshots for debugging, it's
-all so annoying. Let's go fix this process.
+We scan the command in ```main.c``` and turn the string into a series of arguments or tokens using the ```parser()```. 
+
+The ```parser()``` removes unnecessary whitespace, escape sequence characters and stores each word of the command string into a list of tokens. 
+
+Each token in a string which is processed by the ```execute()``` function. 
+
+The execute function forks a child process, identifies what set of instructions, be it custom or in-built, the token calls on and runs them in the child process. 
+
+The prompt shows the absolute path address of the directory the user is currently in (using the ```getcwd()```) function as well as any folder the user might be “using” selected via the ```use()``` function in <>. 
+
+The shell supports 8 custom made commands as well as almost all standard bash shell commands.
+
+<br>
+
+ ### switch
+ <br>
+
+ The switch command functions like the standard bash command ```cd```, with the added ability to access sibling folders without having to ```cd``` into their shared parent directory. For example, for the given file structure.
+
+<br>
+
+~~~bash
+folderC
+    folderA
+      folderD
+    folderB
+~~~~
+
+<br>
+Suppose we are in folderA
+<br>
+
+~~~bash
+$Group44Shell/folderC/folderA>switch folderB 
+~~~
+
+~~~bash
+$Group44Shell/folderC/folderB>
+~~~
+
+<br>
+
+~~~bash
+$Group44Shell/folderC/folderA>switch folderD 
+~~~
+
+~~~bash
+$Group44Shell/folderC/folderA/folderD>
+~~~
+
+<br>
+
+~~~bash
+$Group44Shell/folderC/folderA>switch .. 
+~~~
+
+~~~bash
+$Group44Shell/folderC>
+~~~
+
+<br>
+
+### use
+<br>
+
+The ```use()``` function saves the argument file’s absolute path address and indicates its name in brackets at the end of the Group44Shell prompt. If any command is passed without its argument, it defaults to our saved file’s absolute path address. 
+
+<br>
+
+For example, for the given file structure.
 
 
-### B. Commands Spec
-Your shell should work like normal bash, show a
-prompt like: animesh/dsa> , where you can type your
-commands. The following commands need to be supported. The abbreviated name of the subject you are
-currently working on should be shown in the shell. This
-should persist across runs.
+~~~bash
+folderC
+    folderA
+      folderD
+    folderB
+~~~~
 
-1. switch \<subject>: Change the name of the subject in the prompt and change folders appropriately.
+<br>
+Suppose we are in folderA
+<br>
 
-2. create \<assignment>: Creates a new folder for
-the assignment, downloads (or copies locally) the
-contents of the dist folder and the problem statement into the current directory.
+~~~bash
+$Group44Shell/folderC/folderA>use folderD
+~~~
 
-3. update \<assignment>: Downloads (or copies locally) the new assignment files, deletes the old ones,
-and replaces them.
+~~~bash
+$Group44Shell/folderC/folderA<FolderD>
+~~~
 
-4. setup \<assignment> (optional): Reads an indented text file which has the folder structure to
-be followed. Creates that folder structure.
+<br>
 
-5. test \<assignment>: Runs the submitter.py file in
-the dist folder, if it exists. Store the logs, be it
-compilation error or others in a file that can be
-sent to the TA for debugging.
+~~~bash
+$Group44Shell/folderC/folderA<folderD>switch folderB
+~~~
 
-6. submit \<assignment> Makes a zip file of the current directory. Uploads the file to our servers (or
-copies to local directory)
+~~~bash
+$Group44Shell/folderC/folderB<FolderD>
+~~~
 
-7. compare \<assignment> \<zipfile> Compares the
-file tree to check if any of the files in the submitted
-zip are different from any of the files in the current
-directory. Prints list of those files. Uses MD5 hash
-(command MD5 sum) to compare.
+<br>
 
-8. use \<assignment> Changes the prompt to
-animesh/dsa/\<assignment> and for all commands now, if the <assignment> argument is not
-passed, it will default to this assignment.
+~~~bash
+$Group44Shell/folderC/folderB<FolderD>switch
+~~~
 
-### C. Tasks List
-
-1. Make a basic interactive shell (Shameless
-plug of pretty code for interactive shell:
-https://github.com/AnimeshSinha1309/
-os-assignments/tree/master/AniShell -
-only see small parts of processor/prompt.c, processor/parser.c, processor/tokenizer.c). You
-don't need to implement any of the features here,
-just taking input, splitting by spaces, and making
-cases for each command.
-
-2. Make the commands as listed in the spec above.
-Try to write basic tests to see if all the commands
-are working (optional). Each command will carry
-some marks, and this is the bulk of the project, so
-build incrementally.
-
-3. Propose what commands need to be added to make
-the download and running of these in evals (the
-way we did for assignment 1) as well as running
-MOSS becomes very easy and fast. Suggest how
-you will implement these features. Can you ensure
-that there are almost no cases where the students
-say "It was working, but now it's not?", if we give
-many of the test cases. You don't need to implement anything here.
+~~~bash
+$Group44Shell/folderC/folderA/folderD<FolderD>
+~~~

@@ -1,4 +1,4 @@
-//////////////////////////FOR UTILS/COMMANDS AND THEIR ERROR HANDLING CASES
+//////////////////////////FOR UTILS/COMMANDS AND THEIR ERROR CASES
 
 
 ///////////CREATE
@@ -17,7 +17,8 @@ mkdir: cannot create directory ‘/Project/dsa/assignment1’: File exists
 
 ///////////UPDATE
 1. The update <assignment> command had 2 functions one to delete the dist files in assignment folder using ‘rm’ standard bash command and other function is copy the contents of Downloads folder using  ‘cp’  standard bash command 
-Note: if any files that are needed to update from downloads other than dist files then make sure that the files have same old name
+
+#Note: if any files that are needed to update from downloads other than dist files then make sure that the files have same old name
 
 $shell/Project/dsa>update assignment1
 assignment2 is updated, old files are deleted & new files are downloaded

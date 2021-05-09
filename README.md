@@ -31,7 +31,7 @@ The shell supports 8 custom made commands as well as almost all standard bash sh
  ### switch
  <br>
 
- The ```usefolder(char **args)``` command functions like the standard bash command ```cd```, with the added ability to access sibling folders without having to ```cd``` into their shared parent directory. For example, for the given file structure. It is called by ```switch```.
+ The ```usefolder(char **args)``` command functions like the standard bash command ```cd```, with the added ability to access sibling folders without having to ```cd``` into their shared parent directory. It is called by ```switch```. For example, for the given file structure. 
 
 <br>
 

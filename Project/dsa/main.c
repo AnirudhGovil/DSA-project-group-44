@@ -66,7 +66,7 @@ int main()
         // Print command prompt
         char directory[10001];
         getcwd(directory, 10001);
-        printf("Group44Shell%s<%s>", directory,use_string_name);
+        printf("Group44Shell%s<%s>", directory,use_string_name);//use_string_name holds the name of the directory called by the 'use' function, blank otherwise
 
         // Read command from standard input
         if (fgets(cmd, sizeof(cmd), stdin) == NULL)
@@ -82,10 +82,10 @@ int main()
         {
         case 1: // continue running shell
             continue;
-        case 2: // use function has been called, store the directory address
+        case 2: // use function has been called, store the directory address into use_string and name into use_string_name
             getcwd(use_string,100001);
             strcpy(use_string_name,params[1]);
-            chdir(directory);
+            chdir(directory); // since we want to remain in the same folder, we cd back to out original folder
             
             break;
         default:

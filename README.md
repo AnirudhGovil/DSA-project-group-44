@@ -124,3 +124,75 @@ $Group44Shell/folderC/folderB<FolderD>switch
 ~~~bash
 $Group44Shell/folderC/folderA/folderD<FolderD>
 ~~~
+
+<br>
+
+### test
+<br>
+
+The ```testfolder(char **args)``` function goes to the folder given as an argument to the ```setup``` command and runs the ```submitter.py``` present in the ```dist``` folder, if it exists. The output of the ```submitter.py```, containing all the errors and outputs, is then stored in ```testLog.txt``` file in the main working directory.
+
+For example, for the given file structure.
+
+
+~~~bash
+folderA
+    dist
+      submitter.py    
+~~~~
+
+<br>
+
+Now, if we type the following in the prompt:
+~~~bash
+test folderA
+~~~
+ <br>
+ The program will run the ```submitter.py``` file and create a file ```testLog.txt``` with the output.
+ <br>
+ Hence, the new directory structure will be
+ ~~~bash
+folderA
+    dist
+      submitter.py 
+testLog.txt   
+~~~~
+
+<br>
+
+### setup
+<br>
+
+The ```setupfolder(char **args)``` function reads an indented file ```setup.txt``` from the ```Downloads``` folder present in the current working directory and then creates a folder structure in correspondence with it.
+
+The argument to the ```setup``` command must match with the root directory mentioned at the top of the ```setup.txt```.
+<br>
+Also the ```setup.txt``` file must be indented by using tab spaces.
+<br>
+
+For example, if the ```setup.txt``` file is:
+
+~~~bash
+assignment
+  q1
+  	solution
+			main1
+		testcases
+		q12
+			main2
+	q2
+		solution
+	q3
+~~~
+
+Then, to create this structure, the command should be:
+
+~~~bash
+setup assignment
+~~~
+This will create a directory ```assignment``` in the working directory with all the sub-directories.
+<br>
+
+
+
+

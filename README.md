@@ -14,15 +14,15 @@ gcc main.c utils/switchfolder/switchfolder.c utils/createfolder/createfolder.c u
  ~~~
 
 
-We scan the command in ```main.c``` and turn the string into a series of arguments or tokens using the ```parser()```. 
+We scan the command in ```main.c``` and turn the string into a series of arguments or tokens using the ``` parse(char *cmd, char **params, char *use_string)``` function. 
 
-The ```parser()``` removes unnecessary whitespace, escape sequence characters and stores each word of the command string into a list of tokens. 
+The ``` parse(char *cmd, char **params, char *use_string)``` function removes unnecessary whitespace, escape sequence characters and stores each word of the command string into a list of tokens. 
 
-Each token in a string which is processed by the ```execute()``` function. 
+Each token in a string which is processed by the ```int execute(char **params, char*commands_str[], int (*commands_func[])(char **))``` function. 
 
 The execute function forks a child process, identifies what set of instructions, be it custom or in-built, the token calls on and runs them in the child process. 
 
-The prompt shows the absolute path address of the directory the user is currently in (using the ```getcwd()```) function as well as any folder the user might be “using” selected via the ```use()``` function in <>. 
+The prompt shows the absolute path address of the directory the user is currently in (using the ```getcwd()```) function as well as any folder the user might be “using” selected via the ```usefolder(char **args)``` function in <>. 
 
 The shell supports 8 custom made commands as well as almost all standard bash shell commands.
 
@@ -31,7 +31,7 @@ The shell supports 8 custom made commands as well as almost all standard bash sh
  ### switch
  <br>
 
- The switch command functions like the standard bash command ```cd```, with the added ability to access sibling folders without having to ```cd``` into their shared parent directory. For example, for the given file structure.
+ The ```usefolder(char **args)``` command functions like the standard bash command ```cd```, with the added ability to access sibling folders without having to ```cd``` into their shared parent directory. For example, for the given file structure. It is called by ```switch```.
 
 <br>
 
@@ -79,7 +79,7 @@ $Group44Shell/folderC>
 ### use
 <br>
 
-The ```use()``` function saves the argument file’s absolute path address and indicates its name in brackets at the end of the Group44Shell prompt. If any command is passed without its argument, it defaults to our saved file’s absolute path address. 
+The ```usefolder(char **args)``` function saves the argument file’s absolute path address and indicates its name in brackets at the end of the Group44Shell prompt. If any command is passed without its argument, it defaults to our saved file’s absolute path address. It is called by ```use```.
 
 <br>
 

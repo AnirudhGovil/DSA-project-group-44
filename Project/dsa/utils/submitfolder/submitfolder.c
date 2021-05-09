@@ -19,7 +19,7 @@ int submitfolder(char **args)
     char * file_name;
     strcpy(file_name,args[1]);
     char * z = "/";
-    // dowload_directory = 'Directory where the file need to be submitted';
+    // download_directory = "Directory where the file need to be submitted";
     strcat(current_directory, z);
     strcat(current_directory,file_name);
     FILE* fileptr;

@@ -14,7 +14,7 @@ node* InitNode(char* name, int space)               // creates and initialises a
     node* new = (node*)(malloc(sizeof(node)));
     if (!new)
     {
-        fprintf(stderr, "dash: Allocation error\n");
+        fprintf(stderr, "Group44Shell: Allocation error\n");
         exit(EXIT_FAILURE);
     }
     new->dir_name = name;
@@ -79,14 +79,14 @@ void CreateFolder(tree folder, char* path)      // traverse through the whole tr
         path = (char*)(realloc(path,len1+len2+5));  //contains the path to the present subfolder
         if (!path)
         {
-            fprintf(stderr, "dash: Allocation error\n");
+            fprintf(stderr, "Group44Shell: Allocation error\n");
             exit(EXIT_FAILURE);
         }
 
         char* copy = (char*)(malloc(sizeof(char)*(len1+len2+5)));   //contains the path to the sub-folders of the present folder
         if (!copy)
         {
-            fprintf(stderr, "dash: Allocation error\n");
+            fprintf(stderr, "Group44Shell: Allocation error\n");
             exit(EXIT_FAILURE);
         }
 
@@ -121,7 +121,7 @@ int setupfolder(char **args)
         char *buffer1 = (char *)malloc(sizeof(char) * buffsize);    //stores the first name from the txt file
         if (!buffer1)
         {
-            fprintf(stderr, "dash: Allocation error\n");
+            fprintf(stderr, "Group44Shell: Allocation error\n");
             exit(EXIT_FAILURE);
         }     
         char c;
@@ -137,7 +137,7 @@ int setupfolder(char **args)
                 buffer1 = (char *)realloc(buffer1, buffsize);
                 if (!buffer1)
                 {
-                    fprintf(stderr, "dash: Allocation error\n");
+                    fprintf(stderr, "Group44Shell: Allocation error\n");
                     exit(EXIT_FAILURE);
                 }
             }
@@ -188,7 +188,7 @@ int setupfolder(char **args)
                         buffer2 = (char *)realloc(buffer2, buffsize);
                         if (!buffer2)
                         {
-                            fprintf(stderr, "dash: Allocation error\n");
+                            fprintf(stderr, "Group44Shell: Allocation error\n");
                             exit(EXIT_FAILURE);
                         }
                     }

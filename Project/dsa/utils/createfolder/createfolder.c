@@ -2,12 +2,12 @@
 
 int createfolder(char **args)
 {
-    char cmd1[100001];
-    char cmd2[100001];
-    char current_directory[100001];
-    char download_directory2[100001];
-    char download_directory1[100001];
-    getcwd(current_directory, 100001); //to get the current working directory
+    char cmd1[20001];
+    char cmd2[50001];
+    char current_directory[10001];
+    char download_directory2[20001];
+    char download_directory1[10001];
+    getcwd(current_directory, 10001); //to get the current working directory
 
     //strcpy(download_directory1, "/home/vamsi/Downloads/dsa_assignment/");
     sprintf(download_directory2,"%s/Downloads/",current_directory);

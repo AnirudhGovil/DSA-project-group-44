@@ -44,6 +44,7 @@ int submitfolder(char **args)
     char home_d[100001];
     char cmd1[100001];
     char cmd2[200002];
+    char cmd3[100001];
     getcwd(home_d, 100001);
     if (chdir(args[1]) == -1)
     {
@@ -56,7 +57,9 @@ int submitfolder(char **args)
     strcat(cmd1, ".zip");
     sprintf(cmd2, "zip -r %s %s", cmd1, args[1]);
     system(cmd2);
-    printf("%s is zipped and submmited in the download directory\n",args[1]);
+    sprintf(cmd3, "mv %s Downloads",cmd1);
+    system(cmd3);
+    printf("%s is zipped and submmited in the download folder\n",args[1]);
 
     return 1;
 }

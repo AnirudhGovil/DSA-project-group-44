@@ -4,8 +4,8 @@ int comparefolder(char **args)
 {
     // args[1] -> assignment 
     // args[2] -> zipfile
-    char cmd1[10001];
-    char cmd2[10001];
+    char cmd1[20001];
+    char cmd2[20001];
     char cmd3[10001];
     char home_d[1024];
     char dir1[10001];

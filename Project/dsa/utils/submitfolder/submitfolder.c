@@ -44,7 +44,7 @@ int submitfolder(char **args)
     char home_d[100001];
     char cmd1[100001];
     char cmd2[200002];
-    char cmd3[100001];
+    char cmd3[200001];
     getcwd(home_d, 100001);
     if (chdir(args[1]) == -1)
     {

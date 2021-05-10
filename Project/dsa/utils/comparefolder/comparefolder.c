@@ -8,7 +8,7 @@ int comparefolder(char **args)
     char cmd2[10001];
     char cmd3[10001];
     char current_directory[1024];
-    char download_directory[1024];
+    char download_directory[2024];
     //getcwd(current_directory, 1023);
     // download_directory = " ";
     sprintf(download_directory,"%s/Downloads/",current_directory);

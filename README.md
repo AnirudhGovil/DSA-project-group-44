@@ -243,5 +243,30 @@ rm: cannot remove '/Project/dsa/assignment2/dist': No such file or directory
 ~~~
 
 
+### submit
+Submitfolder finds the file name in the current directory and create a zip file for it.
+~~~bash
+Folder C
+	Folder A
+		Folder D
+~~~
+~~~bash
+$Group44Shell/folderC/folderA>submit folder D
+~~~
+It zips the file and paste in the Download directory.
+~~~bash
+$Group44Shell/Download-directory/folderD.zip
+~~~
+
+ERROR HANDLING
+~~~bash
+$Group44Shell/folderC/folderA>submit folder E
+~~~
+The output will be ```No such File```
+
+
+
+
+
 
 

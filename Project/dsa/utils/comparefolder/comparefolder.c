@@ -1,4 +1,4 @@
-#include "comparefolder.h"
+/* #include "comparefolder.h"
 
 int comparefolder(char **args)
 {
@@ -16,7 +16,7 @@ int comparefolder(char **args)
     char tempdir[1024];
     char tempcmd[10001];
     char download_directory[1024];
-    strcpy(tempdir,args[2]);
+    strcpy(tempdir,args[1]);
     strcat(tempdir,".zip");
     getcwd(home_d, 1024);
     strcpy(download_directory,home_d);
@@ -26,35 +26,32 @@ int comparefolder(char **args)
         printf("NO SUCH FILE TO COMPARE\n");
         return 1;
     }
-    sprintf(tempcmd , "cd Downloads/");
-    system(tempcmd);
+    chdir("Downloads");
     if (chdir(tempdir) == -1)
     {
         printf("NO SUCH ZIPPED FILE TO COMPARE\n");
         return 1;
     }
-    sprintf(tempcmd , "cd ..");
-    system(tempcmd);
+    chdir("..");
 
     chdir(home_d);
-//     strcpy(dir1,home_d);
-//     strcat(dir1,"/");
-//     strcat(dir1,args[1]);
+    strcpy(dir1,home_d);
+    strcat(dir1,"/");
+    strcat(dir1,args[1]);
 
-//     strcpy(dir2,download_directory);
-//     strcat(dir2,"/");
-//     strcat(dir2,args[1]);
-//     strcat(dir2,".zip");
+    strcpy(dir2,download_directory);
+    strcat(dir2,"/");
+    strcat(dir2,args[1]);
+    strcat(dir2,".zip");
 
-    sprintf(tempcmd , "cd Downloads/");
+    chdir("Downloads");
+    sprintf(tempcmd , "unzip -q %s.zip" , args[1]);
     system(tempcmd);
-    sprintf(tempcmd , "unzip -q %s.zip" , args[2]);
-    system(tempcmd);
-    sprintf(tempcmd , "ls %s/ > dir1.txt" , args[2]);
+    sprintf(tempcmd , "ls %s/ > dir1.txt" , args[1]);
     system(tempcmd);
     sprintf(tempcmd , "mv dir1.txt ../");
     system(tempcmd);
-    sprintf(tempcmd , "rm -r %s",args[2]);
+    sprintf(tempcmd , "rm -r %s",args[1]);
     system(tempcmd);
     sprintf(tempcmd , "cd ..");
     system(tempcmd);
@@ -72,49 +69,41 @@ int comparefolder(char **args)
     system(cmd6);
     
     return 0;
-}
+} */
 
-
-/* #include "comparefolder.h"
-
-int exists(const char *fname)
-{
-    FILE *file;
-    if ((file = fopen(fname, "r")))
-    {
-        fclose(file);
-        return 1;
-    }
-    return 0;
-}
+#include "comparefolder.h"
 
 int comparefolder(char **args)
 {
     // args[1] -> assignment
     // args[2] -> zipfile
-    char home_d[100001];
-    char cmd1[100001];
-    char cmd2[200002];
-    char cmd3[300003];
-    getcwd(home_d, 100001);
+    char cmd1[20001];
+    char cmd2[20001];
+    char cmd3[10001];
+    char home_d[1024];
+    char download_directory[1024];
+    getcwd(home_d, 1024);
+
     if (chdir(args[1]) == -1)
     {
-        printf("No such Folder\n");
+        printf("NO SUCH FILE TO COMPARE\n"); // check if the file exists
         return 1;
     }
     chdir(home_d);
-    if (!exists(args[2]))
-    {
-        printf("No such Folder\n");
-        return 1;
-    }
 
-    sprintf(cmd1,"diff <(find %s -type f -exec md5sum {} + | sort -k 2) <(find %s -type f -exec md5sum {} + | sort -k 2)",args[1],args[2]);
+    sprintf(cmd1, "find %s -type f -exec md5sum {} + | sort -k 2 > dir1.txt", args[1]); // get the MD5 hash of the folder
     system(cmd1);
-    sprintf(cmd2, "find %s -type f -exec md5sum {} + | sort -k 2 > dir2.txt", args[2]);
+    chdir("Downloads");
+    sprintf(cmd2, "unzip -p %s a2/dirz.txt > dir2.txt", args[2]); // extract the MD5 hash from the zip folder
     system(cmd2);
-    sprintf(cmd3, "diff -r <dir1.txt> <dir2.txt>");
+    chdir(home_d);
+    sprintf(cmd3,"diff -sq dir1.txt Downloads/dir2.txt"); // check if there is a differenece
     system(cmd3);
- 
+    sprintf(cmd3,"rm dir1.txt");
+    system(cmd3);
+    sprintf(cmd3,"rm Downloads/dir2.txt");
+    system(cmd3);
+    //cleanup
+    
     return 0;
-} */
+}

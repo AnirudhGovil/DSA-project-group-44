@@ -42,9 +42,11 @@
 int submitfolder(char **args)
 {
     char home_d[100001];
+    char cmd0[100001];
     char cmd1[100001];
     char cmd2[200002];
     char cmd3[200001];
+    char cmd4[100001];
     getcwd(home_d, 100001);
     if (chdir(args[1]) == -1)
     {
@@ -52,6 +54,10 @@ int submitfolder(char **args)
         return 1;
     }
     chdir(home_d);
+    sprintf(cmd0, "find %s -type f -exec md5sum {} + | sort -k 2 > dirz.txt", args[1]);
+    system(cmd0);
+    sprintf(cmd4, "mv dirz.txt %s",args[1]);
+    system(cmd4);
 
     strcat(cmd1, args[1]);
     strcat(cmd1, ".zip");
@@ -60,6 +66,8 @@ int submitfolder(char **args)
     sprintf(cmd3, "mv %s Downloads",cmd1);
     system(cmd3);
     printf("%s is zipped and submmited in the download folder\n",args[1]);
+    sprintf(cmd4, "rm %s/dirz.txt",args[1]);
+    system(cmd4);
 
     return 1;
 }

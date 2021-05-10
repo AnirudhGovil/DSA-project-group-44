@@ -21,8 +21,8 @@ int createfolder(char **args)
     int i = system(cmd1); //to create empty directory with name arg[1]
 
     chdir("Downloads");
-    sprintf(cmd2, "cp -R local_assignment/. ../%s/",args[1]);
-    system(cmd2);
+    //sprintf(cmd2, "cp -R local_assignment/. ../%s/",args[1]);
+    //system(cmd2);
     sprintf(cmd2, "cp -a dist ../%s/",args[1]);
     system(cmd2);
     sprintf(cmd2, "cp -a problem_set.pdf ../%s/",args[1]);

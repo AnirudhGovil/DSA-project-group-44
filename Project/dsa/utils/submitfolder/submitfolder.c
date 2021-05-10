@@ -56,6 +56,7 @@ int submitfolder(char **args)
     strcat(cmd1, ".zip");
     sprintf(cmd2, "zip -r %s %s", cmd1, args[1]);
     system(cmd2);
+    printf("%s is zipped and submmited in the download directory\n",args[1]);
 
     return 1;
 }

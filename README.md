@@ -263,7 +263,7 @@ ERROR HANDLING
 ~~~bash
 $Group44Shell/folderC/folderA>submit folder E
 ~~~
-The output will be ```No such File```
+The output will be ```No such Folder```
 
 ### compare
 Compare finds the file name in the current directory and compare it with the zip file in the download directory.

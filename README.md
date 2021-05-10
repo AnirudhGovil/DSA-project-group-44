@@ -25,6 +25,8 @@ The prompt shows the absolute path address of the directory the user is currentl
 
 The shell supports 8 custom made commands as well as almost all standard bash shell commands.
 
+<br>
+
 ### Error Handling in execute
 
 <br>

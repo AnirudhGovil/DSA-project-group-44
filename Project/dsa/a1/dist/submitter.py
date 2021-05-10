@@ -8,7 +8,7 @@ ENDCOLOR = '\033[0m'
 
 
 #roll = input("Please enter your roll number here: ")
-roll = "a1"
+roll = "assignment1"
 try:
 	os.chdir(f"{roll}")
 except:

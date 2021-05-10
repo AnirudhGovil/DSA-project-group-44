@@ -37,14 +37,14 @@ int comparefolder(char **args)
     system(tempcmd);
 
     chdir(home_d);
-    strcpy(dir1,home_d);
-    strcat(dir1,"/");
-    strcat(dir1,args[1]);
+//     strcpy(dir1,home_d);
+//     strcat(dir1,"/");
+//     strcat(dir1,args[1]);
 
-    strcpy(dir2,download_directory);
-    strcat(dir2,"/");
-    strcat(dir2,args[1]);
-    strcat(dir2,".zip");
+//     strcpy(dir2,download_directory);
+//     strcat(dir2,"/");
+//     strcat(dir2,args[1]);
+//     strcat(dir2,".zip");
 
     sprintf(tempcmd , "cd Downloads/");
     system(tempcmd);

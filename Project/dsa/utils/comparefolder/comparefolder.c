@@ -83,28 +83,27 @@ int comparefolder(char **args)
     char home_d[1024];
     char download_directory[1024];
     getcwd(home_d, 1024);
-    //strcpy(download_directory, args[1]);
-    //strcat(download_directory,".zip");
+
     if (chdir(args[1]) == -1)
     {
-        printf("NO SUCH FILE TO COMPARE\n");
+        printf("NO SUCH FILE TO COMPARE\n"); // check if the file exists
         return 1;
     }
     chdir(home_d);
 
-    sprintf(cmd1, "find %s -type f -exec md5sum {} + | sort -k 2 > dir1.txt", args[1]);
+    sprintf(cmd1, "find %s -type f -exec md5sum {} + | sort -k 2 > dir1.txt", args[1]); // get the MD5 hash of the folder
     system(cmd1);
     chdir("Downloads");
-    sprintf(cmd2, "unzip -p %s a2/dirz.txt > dir2.txt", args[2]);
+    sprintf(cmd2, "unzip -p %s a2/dirz.txt > dir2.txt", args[2]); // extract the MD5 hash from the zip folder
     system(cmd2);
     chdir(home_d);
-    sprintf(cmd3,"diff -sq dir1.txt Downloads/dir2.txt");
+    sprintf(cmd3,"diff -sq dir1.txt Downloads/dir2.txt"); // check if there is a differenece
     system(cmd3);
     sprintf(cmd3,"rm dir1.txt");
     system(cmd3);
     sprintf(cmd3,"rm Downloads/dir2.txt");
     system(cmd3);
-    
+    //cleanup
     
     return 0;
 }

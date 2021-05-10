@@ -54,19 +54,19 @@ int submitfolder(char **args)
         return 1;
     }
     chdir(home_d);
-    sprintf(cmd0, "find %s -type f -exec md5sum {} + | sort -k 2 > dirz.txt", args[1]);
+    sprintf(cmd0, "find %s -type f -exec md5sum {} + | sort -k 2 > dirz.txt", args[1]); // create a MD5 hash of the folder
     system(cmd0);
-    sprintf(cmd4, "mv dirz.txt %s",args[1]);
+    sprintf(cmd4, "mv dirz.txt %s",args[1]); //store it in the folder
     system(cmd4);
 
     strcat(cmd1, args[1]);
     strcat(cmd1, ".zip");
-    sprintf(cmd2, "zip -r %s %s", cmd1, args[1]);
+    sprintf(cmd2, "zip -r %s %s", cmd1, args[1]); // zip the folder with its hash
     system(cmd2);
     sprintf(cmd3, "mv %s Downloads",cmd1);
     system(cmd3);
-    printf("%s is zipped and submmited in the download folder\n",args[1]);
-    sprintf(cmd4, "rm %s/dirz.txt",args[1]);
+    printf("%s is zipped and submmited in the download folder\n",args[1]); //succcessful submssion
+    sprintf(cmd4, "rm %s/dirz.txt",args[1]); // remove the MD5 hash from the folder
     system(cmd4);
 
     return 1;

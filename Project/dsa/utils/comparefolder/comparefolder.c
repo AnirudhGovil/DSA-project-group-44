@@ -16,7 +16,7 @@ int comparefolder(char **args)
     char tempdir[1024];
     char tempcmd[10001];
     char download_directory[1024];
-    strcpy(tempdir,args[1]);
+    strcpy(tempdir,args[2]);
     strcat(tempdir,".zip");
     getcwd(home_d, 1024);
     strcpy(download_directory,home_d);
@@ -48,13 +48,13 @@ int comparefolder(char **args)
 
     sprintf(tempcmd , "cd Downloads/");
     system(tempcmd);
-    sprintf(tempcmd , "unzip -q %s.zip" , args[1]);
+    sprintf(tempcmd , "unzip -q %s.zip" , args[2]);
     system(tempcmd);
-    sprintf(tempcmd , "ls %s/ > dir1.txt" , args[1]);
+    sprintf(tempcmd , "ls %s/ > dir1.txt" , args[2]);
     system(tempcmd);
     sprintf(tempcmd , "mv dir1.txt ../");
     system(tempcmd);
-    sprintf(tempcmd , "rm -r %s",args[1]);
+    sprintf(tempcmd , "rm -r %s",args[2]);
     system(tempcmd);
     sprintf(tempcmd , "cd ..");
     system(tempcmd);

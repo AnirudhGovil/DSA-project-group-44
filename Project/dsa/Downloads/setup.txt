@@ -1,4 +1,4 @@
-assignment2
+a2
 	q1
 		solution
 			main1

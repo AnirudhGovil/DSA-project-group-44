@@ -23,9 +23,9 @@ int createfolder(char **args)
     chdir("Downloads");
     //sprintf(cmd2, "cp -R local_assignment/. ../%s/",args[1]);
     //system(cmd2);
-    sprintf(cmd2, "cp -a dist ../%s",args[1]);
+    sprintf(cmd2, "cp -a dist ../%s",args[1]); // copy dist files
     system(cmd2);
-    sprintf(cmd2, "cp -a problem_set.pdf ../%s",args[1]);
+    sprintf(cmd2, "cp -a problem_set.pdf ../%s",args[1]);// copy problemm set
     system(cmd2);
     chdir(current_directory);
     if (i == 0)

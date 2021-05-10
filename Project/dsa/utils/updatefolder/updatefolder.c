@@ -35,21 +35,22 @@ int updatefolder(char **args)
 
     if (chdir("Downloads") == -1)
     {
-        printf("Downloads folder is not present in this directory\n");
+        printf("Downloads folder is not present in this directory\n"); // checking i fthe required flder is present
         chdir(current_directory);
         return 1;
     }
     chdir(current_directory);
 
-    sprintf(cmd1, "rm -r %s", args[1]);
+    sprintf(cmd1, "rm -r %s/dist", args[1]);
+    sprintf(cmd1, "rm  %s/problem_set.pdf", args[1]);
     int i = system(cmd1); //to delete old dist files in directory arg[1]
 
     chdir("Downloads");
     //sprintf(cmd2, "cp -R local_assignment/. ../%s/",args[1]);
     //system(cmd2);
-    sprintf(cmd2, "cp -a dist ../%s",args[1]);
+    sprintf(cmd2, "cp -a dist ../%s/",args[1]); // copy dist files
     system(cmd2);
-    sprintf(cmd2, "cp -a problem_set.pdf ../%s",args[1]);
+    sprintf(cmd2, "cp -a problem_set.pdf ../%s",args[1]); // copy problem set
     system(cmd2);
     if (i == 0)
         printf("%s is updated, old files are deleted & new files are downloaded\n", args[1]);

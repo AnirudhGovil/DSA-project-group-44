@@ -105,8 +105,7 @@ void CreateFolder(tree folder, char* path)      // traverse through the whole tr
 
 int setupfolder(char **args)
 {
-    
-    
+
     char filename[] = "Downloads/setup.txt";  //**Path for the indented file to be read**//
     FILE* fileptr;
     fileptr = fopen(filename, "r") ;
@@ -126,8 +125,6 @@ int setupfolder(char **args)
             exit(EXIT_FAILURE);
         }     
         char c;
-        c = fgetc(fileptr);
-        
         while(c!='\n' && c!=EOF)
         {
             buffer1[position] = c;
@@ -146,11 +143,6 @@ int setupfolder(char **args)
         }
         buffer1[position] = '\0';
 
-        /* if(strcmp(buffer1,args[1])!=0)      //checks if argument to setup and root directory have same name
-        {
-            fprintf(stderr, "Argument and Root directory do not match!\n");
-            exit(EXIT_FAILURE);
-        } */
 
         if(c == EOF)    //checks if a dir name is present except root directory
         {

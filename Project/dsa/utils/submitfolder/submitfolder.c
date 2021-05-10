@@ -1,6 +1,6 @@
 #include "submitfolder.h"
 
-int submitfolder(char **args)
+/* int submitfolder(char **args)
 {
     char cmd1[10001];
     char cmd2[10001];
@@ -8,7 +8,7 @@ int submitfolder(char **args)
     char current_directory[1024];
     char download_directory[1024];
     getcwd(current_directory, 1023);
-    char * file_name;
+    char * file_name = (char*)malloc(200002*sizeof(char));
     strcpy(file_name,args[1]);
     char * z = "/";
     // download_directory = "Directory where the file need to be submitted";
@@ -23,7 +23,6 @@ int submitfolder(char **args)
     }   
     else
     {
-    
         sprintf(cmd1,"zip -q %s.zip %s ",file_name ,file_name );
         system(cmd1);
         strcat(file_name, ".zip");
@@ -35,5 +34,27 @@ int submitfolder(char **args)
         
     }
     
+    return 1;
+}
+ */
+
+int submitfolder(char **args)
+{
+    char home_d[100001];
+    char cmd1[100001];
+    char cmd2[200002];
+    getcwd(home_d, 100001);
+    if (chdir(args[1]) == -1)
+    {
+        printf("No such Folder\n");
+        return 1;
+    }
+    chdir(home_d);
+
+    strcat(cmd1, args[1]);
+    strcat(cmd1, ".zip");
+    sprintf(cmd2, "zip -r %s %s", cmd1, args[1]);
+    system(cmd2);
+
     return 1;
 }

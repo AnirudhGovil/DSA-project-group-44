@@ -14,7 +14,7 @@ int testfolder(char **args)
     char *buffer = (char *)malloc(sizeof(char) * buffsize);     //stores path to submitter.py
     if (!buffer)    //check if memory is allocated
     {
-        fprintf(stderr, "dash: Allocation error\n");
+        fprintf(stderr, "Group44Shell: Allocation error\n");
         exit(EXIT_FAILURE);
     }
     char c;
@@ -38,7 +38,7 @@ int testfolder(char **args)
 
             if (!buffer)
             {
-                fprintf(stderr, "dash: Allocation error\n");
+                fprintf(stderr, "Group44Shell: Allocation error\n");
                 exit(EXIT_FAILURE);
             }
         }
@@ -54,7 +54,7 @@ int testfolder(char **args)
         char* new_buffer = (char *)malloc(sizeof(char) * buffsize); //contains the command line to run submitter.py
         if (!new_buffer) 
         {
-            fprintf(stderr, "dash: Allocation error\n");
+            fprintf(stderr, "Group44Shell: Allocation error\n");
             exit(EXIT_FAILURE);
         }
         

@@ -83,7 +83,8 @@ int main()
         case 1: // continue running shell
             continue;
         case 2: // use function has been called, store the directory address into use_string and name into use_string_name
-            getcwd(use_string,100001);
+            //getcwd(use_string,100001);
+            strcpy(use_string,params[1]);
             strcpy(use_string_name,params[1]);
             chdir(directory); // since we want to remain in the same folder, we cd back to out original folder
             

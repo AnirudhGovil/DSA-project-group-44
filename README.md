@@ -79,7 +79,7 @@ $Group44Shell/folderC>
 ### use
 <br>
 
-The ```usefolder(char **args)``` function saves the argument file’s absolute path address and indicates its name in brackets at the end of the Group44Shell prompt. If any command is passed without its argument, it defaults to our saved file’s absolute path address. It is called by ```use```.
+The ```usefolder(char **args)``` function saves the argument file’s name and indicates it in brackets at the end of the Group44Shell prompt. If any command is passed without its argument, it defaults to our saved file’s name. It is called by ```use```.
 
 <br>
 
@@ -90,6 +90,7 @@ For example, for the given file structure.
 folderC
     folderA
       folderD
+	  folderE
     folderB
 ~~~~
 
@@ -112,7 +113,7 @@ $Group44Shell/folderC/folderB<FolderD>
 <br>
 
 ~~~bash
-$Group44Shell/folderC/folderB<FolderD>switch
+$Group44Shell/folderC/folderA/folderE<FolderD>switch
 $Group44Shell/folderC/folderA/folderD<FolderD>
 ~~~
 

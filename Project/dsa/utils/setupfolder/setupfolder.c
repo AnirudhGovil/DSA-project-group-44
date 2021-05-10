@@ -145,11 +145,11 @@ int setupfolder(char **args)
         }
         buffer1[position] = '\0';
 
-        if(strcmp(buffer1,args[1])!=0)      //checks if argument to setup and root directory have same name
+        /* if(strcmp(buffer1,args[1])!=0)      //checks if argument to setup and root directory have same name
         {
             fprintf(stderr, "Argument and Root directory do not match!\n");
             exit(EXIT_FAILURE);
-        }
+        } */
 
         if(c == EOF)    //checks if a dir name is present except root directory
         {

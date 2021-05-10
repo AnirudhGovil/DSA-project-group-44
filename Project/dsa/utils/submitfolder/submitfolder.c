@@ -11,6 +11,7 @@ int submitfolder(char **args)
     char * file_name;
     strcpy(file_name,args[1]);
     char * z = "/";
+    sprintf(download_directory,"%s/Downloads/",current_directory);
     // download_directory = "Directory where the file need to be submitted";
     strcat(current_directory, z);
     strcat(current_directory,file_name);

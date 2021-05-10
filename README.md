@@ -282,6 +282,7 @@ $Group44Shell/Download-directory/folderD.zip
 ~~~
 It will create ```dir1.txt``` and ```dir2.txt``` and will contain the files in the folder and the zip file of the folder. 
 ```diff``` will be used to print the files that are different in both folders.
+<br>
 ERROR HANDLING
 ~~~bash
 $Group44Shell/folderC/folderA>compare folder E

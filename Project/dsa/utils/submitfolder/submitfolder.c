@@ -11,6 +11,7 @@
     char * file_name = (char*)malloc(200002*sizeof(char));
     strcpy(file_name,args[1]);
     char * z = "/";
+    sprintf(download_directory,"%s/Downloads/",current_directory);
     // download_directory = "Directory where the file need to be submitted";
     strcat(current_directory, z);
     strcat(current_directory,file_name);

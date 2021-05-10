@@ -11,6 +11,7 @@ int comparefolder(char **args)
     char download_directory[1024];
     //getcwd(current_directory, 1023);
     // download_directory = " ";
+    sprintf(download_directory,"%s/Downloads/",current_directory);
     char * z = "/";
     FILE * fileptr;
     strcat(current_directory, z);

@@ -264,6 +264,28 @@ $Group44Shell/folderC/folderA>submit folder E
 ~~~
 The output will be ```No such File```
 
+### compare
+Compare finds the file name in the current directory and compare it with the zip file in the download directory.
+~~~bash
+Folder C
+	Folder A
+		Folder D
+~~~
+~~~bash
+$Group44Shell/folderC/folderA>compare folder D
+~~~
+~~~bash
+$Group44Shell/Download-directory/folderD.zip
+~~~
+It will create ```dir1.txt``` and ```dir2.txt``` and will contain the files in the folder and the zip file of the folder. 
+```diff``` will be used to print the files that are different in both folders.
+ERROR HANDLING
+~~~bash
+$Group44Shell/folderC/folderA>compare folder E
+~~~
+The output will be ```NO SUCH FILE TO COMPARE```
+
+
 
 
 

@@ -47,9 +47,9 @@ int updatefolder(char **args)
     chdir("Downloads");
     //sprintf(cmd2, "cp -R local_assignment/. ../%s/",args[1]);
     //system(cmd2);
-    sprintf(cmd2, "cp -a dist ../%s/",args[1]);
+    sprintf(cmd2, "cp -a dist ../%s",args[1]);
     system(cmd2);
-    sprintf(cmd2, "cp -a problem_set.pdf ../%s/",args[1]);
+    sprintf(cmd2, "cp -a problem_set.pdf ../%s",args[1]);
     system(cmd2);
     if (i == 0)
         printf("%s is updated, old files are deleted & new files are downloaded\n", args[1]);

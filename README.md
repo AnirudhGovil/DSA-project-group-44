@@ -199,17 +199,16 @@ This will create a directory ```assignment``` in the working directory with all 
 
 <br>
 
-1. The ```create <assignment>``` command had 2 functions one to create the folder named assignment in the current directory using ```mkdir``` standard bash command and other function is to copy the contents of Downloads folder to the  newly created assignment folder using ```cp```  standard bash command
+1. The ```create <assignment>``` command had 2 functions one to create the folder named assignment in the current directory using ```mkdir``` standard bash command and other function is to copy the contents of the dist folder and the problem statement from Downloads folder to the  newly created assignment folder using ```cp```  standard bash command
 
 <br>
 
 ~~~bash
 $shell/Project/dsa> create assignment1
+assignment1 is created and downloaded the required files
 ~~~
 
-assignment1 is created and downloaded the required files
-
-ERROR CASE 
+#### ERROR CASE 
 
 <br>
 
@@ -226,7 +225,7 @@ mkdir: cannot create directory ‘/Project/dsa/assignment1’: File exists
 
 <br>
 
-1. The ```update <assignment>``` command had 2 functions one to delete the dist files in assignment folder using ```rm``` standard bash command and other function is copy the contents of Downloads folder using  ```cp```  standard bash command 
+1. The ```update <assignment>``` command had 2 functions one to delete the dist files in assignment folder using ```rm``` standard bash command and other function is copy the contents of Downloads folder using  ```cp```  standard bash command which updates the contents of the dist folder and the problem statement in selected assignment 
 
 #Note: if any files that are needed to update from downloads other than dist files then make sure that the files have same old name
 
@@ -234,10 +233,11 @@ mkdir: cannot create directory ‘/Project/dsa/assignment1’: File exists
 
 ~~~bash$
 shell/Project/dsa>update assignment1
-~~~
 assignment2 is updated, old files are deleted & new files are downloaded
+~~~
 
-ERROR CASE 
+#### ERROR CASE 
+
 1. If assignment1 folder doesn’t exist in current directory
 
 ~~~bash
@@ -256,7 +256,7 @@ Folder C
 ~~~bash
 $Group44Shell/folderC/folderA>submit folder D
 ~~~
-It zips the file and paste in the Download directory.
+It zips the file and pastes it in the Download directory.
 ~~~bash
 $Group44Shell/Download-directory/folderD.zip
 ~~~
@@ -268,19 +268,19 @@ $Group44Shell/folderC/folderA>submit folder E
 The output will be ```No such Folder```
 
 ### compare
-Compare finds the file name in the current directory and compare it with the zip file in the download directory.
+Compare finds the file name in the current directory and compare it with the zip file in the ```Downloads``` directory.
 ~~~bash
-Folder C
-	Folder A
-		Folder D
+FolderC
+	FolderA
+		FolderD
 ~~~
 ~~~bash
-$Group44Shell/folderC/folderA>compare folder D
+$Group44Shell/folderC/folderA>compare folderD folderD.zip
 ~~~
 ~~~bash
-$Group44Shell/Download-directory/folderD.zip
+Files dir1.txt and Downloads/dir2.txt are identical
 ~~~
-It will create ```dir1.txt``` and ```dir2.txt``` and will contain the files in the folder and the zip file of the folder. 
+It will create ```dir1.txt``` and ```Downloads/dir2.txt``` and will contain the files in the folder and the zip file of the folder. 
 ```diff``` will be used to print the files that are different in both folders.
 <br>
 ERROR HANDLING

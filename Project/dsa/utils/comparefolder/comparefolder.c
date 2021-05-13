@@ -94,7 +94,7 @@ int comparefolder(char **args)
     sprintf(cmd1, "find %s -type f -exec md5sum {} + | sort -k 2 > dir1.txt", args[1]); // get the MD5 hash of the folder
     system(cmd1);
     chdir("Downloads");
-    sprintf(cmd2, "unzip -p %s a2/dirz.txt > dir2.txt", args[2]); // extract the MD5 hash from the zip folder
+    sprintf(cmd2, "unzip -p %s %s/dirz.txt > dir2.txt", args[2], args[1]); // extract the MD5 hash from the zip folder
     system(cmd2);
     chdir(home_d);
     sprintf(cmd3,"diff -sq dir1.txt Downloads/dir2.txt"); // check if there is a differenece
